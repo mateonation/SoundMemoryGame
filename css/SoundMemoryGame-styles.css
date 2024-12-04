@@ -13,12 +13,12 @@ body{
     margin-left:auto;
     margin-right:auto;
     display:grid;
-    border:1px solid black;
+    border:2px solid black;
+    border-radius:0.5em;
     text-align:center;
     width:auto;
     .FIRST{
         padding:1em;
-        background:lime;
         h1,p{
             margin:0;
         }
@@ -26,7 +26,6 @@ body{
     .SECOND{
         display:grid;
         grid-template-columns:min-content auto;
-        background:yellow;
         .game-board{
             display:grid;
             justify-content:space-around;
@@ -34,20 +33,20 @@ body{
             grid-template-rows:repeat(2, 1fr);
             gap:2em;
             padding:2em;
-            .button{
+            .block{
                 width:150px;
                 height:150px;
                 border-radius:1em;
                 filter:brightness(50%);
+                transition:0.2s;
             }
-            .button:hover{
-                filter:brightness(100%);
+            .block:hover{
+                filter:brightness(70%);
             }
         }
         .stats{
             display:flex;
             padding:1em;
-            background:red;
             flex-flow:column;
             width:auto;
             gap:1em;
@@ -75,7 +74,6 @@ body{
     }
     .THIRD{
         padding:1em;
-        background:magenta;
         display:flex;
         justify-content:space-evenly;
         div{
@@ -83,35 +81,54 @@ body{
         }
         select,button{
             font-size:large;
-            background:white;
-            border:none;
             padding:0.3em;
             border-radius:1em;
             margin:0.5em;
+            transition:0.2s;
         }
         button{
             padding-left:3em;
             padding-right:3em;
-        }
-        button:hover{
-            background:gold;
-            color:white;
+            transition:0.2s;
         }
     }
 }
 
 /*THEMES*/
 .default{
-    #btn01{
-        background:red;
+    background:linear-gradient(45deg,#5a8bc4,#c7fbff);
+    .main-container{
+        background:linear-gradient(#ffffff6e,#ffffff18 10%);
+        box-shadow: 0px 0px 10px #27265a93;
     }
-    #btn02{
-        background:lime;
+    .SECOND{
+        .block{
+            box-shadow: 0px 0px 10px #27265a;
+        }
+        #btn01{
+            background:red;
+        }
+        #btn02{
+            background:lime;
+        }
+        #btn03{
+            background:gold;
+        }
+        #btn04{
+            background:blue;
+        }
+        input{
+            box-shadow: 0px 0px 10px #331c522f;
+        }
     }
-    #btn03{
-        background:gold;
-    }
-    #btn04{
-        background:blue;
+    .THIRD{
+        button,select{
+            background:linear-gradient(#ffffff75,transparent 70%,#66666617 90%);
+            border:5px solid #4bb7ff;
+            box-shadow: 0px 0px 10px #27265a5d;
+        }
+        button:hover,select:hover{
+            border-color:#5f97eb;
+        }
     }
 }
