@@ -1,3 +1,53 @@
 *{
     box-sizing:border-box;
+    font-family:'Outfit';
+}
+body{
+    margin:0;
+    display:flex;
+    height:100vh;
+}
+.main-container{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:auto;
+    margin-right:auto;
+    display:grid;
+    border:1px solid black;
+    text-align:center;
+    width:auto;
+    .FIRST{
+        padding:1em;
+        background:lime;
+        h1{
+            margin:0;
+        }
+    }
+    .SECOND{
+        display:grid;
+        grid-template-columns:min-content auto;
+        background:yellow;
+        .game-board{
+            display:grid;
+            justify-content:space-around;
+            grid-template-columns:repeat(2, auto);
+            grid-template-rows:repeat(2, 1fr);
+            gap:2em;
+            padding:2em;
+            .button{
+                width:100px;
+                height:100px;
+                background:blue;
+                border-radius:0.5em;
+            }
+        }
+        .stats{
+            padding:1em;
+            background:red;
+        }
+    }
+    .THIRD{
+        padding:20px;
+        background:magenta;
+    }
 }
