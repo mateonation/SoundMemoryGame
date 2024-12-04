@@ -19,7 +19,7 @@ body{
     .FIRST{
         padding:1em;
         background:lime;
-        h1{
+        h1,p{
             margin:0;
         }
     }
@@ -35,19 +35,83 @@ body{
             gap:2em;
             padding:2em;
             .button{
-                width:100px;
-                height:100px;
-                background:blue;
-                border-radius:0.5em;
+                width:150px;
+                height:150px;
+                border-radius:1em;
+                filter:brightness(50%);
+            }
+            .button:hover{
+                filter:brightness(100%);
             }
         }
         .stats{
+            display:flex;
             padding:1em;
             background:red;
+            flex-flow:column;
+            width:auto;
+            gap:1em;
+            label{
+                margin-left:auto;
+                margin-right:auto;
+                font-size:large;
+                display:grid;
+                gap:0.3em;
+                width:60px;
+                input{
+                    appearance:none;
+                    border:none;
+                    padding:0.3em;
+                    border-radius: 0.3em;
+                    width:100%;
+                    margin-left:auto;
+                    margin-right:auto;
+                }
+            }
+            label:last-child{
+                margin-top:auto;
+            }
         }
     }
     .THIRD{
-        padding:20px;
+        padding:1em;
         background:magenta;
+        display:flex;
+        justify-content:space-evenly;
+        div{
+            display:grid;
+        }
+        select,button{
+            font-size:large;
+            background:white;
+            border:none;
+            padding:0.3em;
+            border-radius:1em;
+            margin:0.5em;
+        }
+        button{
+            padding-left:3em;
+            padding-right:3em;
+        }
+        button:hover{
+            background:gold;
+            color:white;
+        }
+    }
+}
+
+/*THEMES*/
+.default{
+    #btn01{
+        background:red;
+    }
+    #btn02{
+        background:lime;
+    }
+    #btn03{
+        background:gold;
+    }
+    #btn04{
+        background:blue;
     }
 }

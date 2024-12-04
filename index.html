@@ -10,17 +10,37 @@
     </head>
     <body>
         <section class="main-container">
-            <section class="FIRST"><h1>SoundMemoryGame</h1><br>by mateonation</section>
+            <section class="FIRST"><h1>SoundMemoryGame</h1><p>by mateonation</p></section>
             <section class="SECOND">
-                <section class="game-board">
+                <section class="game-board default">
                     <div class="button" id="btn01"></div>
                     <div class="button" id="btn02"></div>
                     <div class="button" id="btn03"></div>
                     <div class="button" id="btn04"></div>
                 </section>
-                <section class="stats"></section>
+                <section class="stats">
+                    <label for="level-num">LEVEL
+                    <input type="text" id="level-num" readonly></label>
+                    <label for="speed-num">SPEED
+                    <input type="text" id="speed-num"></label>
+                    <label for="points-num">POINTS
+                    <input type="text" id="points-num" readonly></label>
+                </section>
             </section>
-            <section class="THIRD"></section>
+            <section class="THIRD">
+                <div>
+                    <select id="speed-selector">
+                        <option value="1">w/ speed progression</option>
+                        <option value="2">w/o speed progression</option>
+                        <option value="3">custom speed</option>
+                    </select>
+                    <select id="theme-selector">
+                        <option value="1">default theme</option>
+                        <option value="2">alt theme 1</option>
+                    </select>
+                </div>
+                <button id="start" onclick="startGame();">START!</button>
+            </section>
         </section>
         <script src="js/SoundMemoryGame-script.js"></script>
     </body>
