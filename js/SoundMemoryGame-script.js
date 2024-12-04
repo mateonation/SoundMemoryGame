@@ -14,3 +14,15 @@ function startGame(){
     // set the state of the game to started
     gamestarted=true;
 }
+
+function buttonPressed(id){
+    let pressedbtn=document.getElementById(id);
+    let btncolor=getComputedStyle(pressedbtn).backgroundColor;
+    if(gamestarted){
+        
+    }else{
+        
+    }
+    pressedbtn.style.filter='brightness(100%)';
+    pressedbtn.style.background='radial-gradient(closest-side, #ffffff, '+btncolor+')';
+}
