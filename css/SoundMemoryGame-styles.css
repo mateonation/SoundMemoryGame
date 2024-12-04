@@ -33,14 +33,14 @@ body{
             grid-template-rows:repeat(2, 1fr);
             gap:2em;
             padding:2em;
-            .block{
+            div{
                 width:150px;
                 height:150px;
                 border-radius:1em;
                 filter:brightness(50%);
                 transition:0.2s;
             }
-            .block:hover{
+            div:hover{
                 filter:brightness(70%);
             }
         }
@@ -102,20 +102,20 @@ body{
         box-shadow: 0px 0px 10px #27265a93;
     }
     .SECOND{
-        .block{
+        div{
             box-shadow: 0px 0px 10px #27265a;
         }
         #btn01{
-            background:red;
+            background-color:#ff0000;
         }
         #btn02{
-            background:lime;
+            background-color:#00ff00;
         }
         #btn03{
-            background:gold;
+            background-color:#ffd700;
         }
         #btn04{
-            background:blue;
+            background-color:#0000ff;
         }
         input{
             box-shadow: 0px 0px 10px #331c522f;
