@@ -1,4 +1,4 @@
-let sequence=[];let userseq=[];let userseqiteration;
+let sequence=[];let userseq=[];let userseqiteration;let back;
 let level=0;let lvl_display=document.getElementById('level-num');
 let speed=1;let sp_display=document.getElementById('speed-num');
 let points=0;let pt_display=document.getElementById('points-num');
@@ -16,7 +16,7 @@ function startGame(){
         cancontinue=false;
     }
     // reset game stats to default and display them on each display
-    sequence=[];userseq=[];
+    sequence=[];
     level=0;lvl_display.value=level;
     points=0;pt_display.value=points;
     speed=1;sp_display.value=speed;
@@ -37,6 +37,8 @@ function buttonPressed(id){
     }
     // get the id of said button and it's background color
     let pressedbtn=document.getElementById(id);
+    // set the perfect sequence to false
+    let perfseq=false;
     // if a game was started, CHECK IF IT'S VALID ON THE SEQUENCE WIP WIP WIP WIP!!!
     if(gamestarted){
         // if the button coincides, sum up one iteration
@@ -45,7 +47,7 @@ function buttonPressed(id){
             userseqiteration++;
             // this should loop again the sequence executer if the iteration excedes the sequence length
             if(userseqiteration>=sequence.length){
-                alert('order repeated correctly');
+                perfseq=true;
             }
         // If not, set the game started to false and show up an error alert
         }else{
@@ -53,41 +55,40 @@ function buttonPressed(id){
             gamestarted=false;
         }
     }
+    // get background color of the button that was pressed
+    back=getComputedStyle(pressedbtn).backgroundColor;
     // initialize animation to bright up the button pressed
-    brightButtonAmt(pressedbtn);
+    let a=0;
+    brightButtonAmt(pressedbtn,back,a);
     // remove styles that were added in a timeout
     setTimeout(()=>{
         pressedbtn.removeAttribute('style');
-        // now that the function fully finished, player can continue
-        cancontinue=true;
+        // execute the sequence again if the sequence was perfect
+        if(perfseq){
+            sequenceExecuter(speed);
+            cancontinue=false;
+        }else{
+            cancontinue=true;
+        }
     },100);
 }
 
 // To bright up a button
-function brightButtonAmt(button){
-    // get background color of the button that was pressed
-    let back=getComputedStyle(button).backgroundColor;
-    button.style.filter='brightness(100%)';
-    button.style.background='radial-gradient(closest-side, #ffffff, '+back+')';
+function brightButtonAmt(button,back,a){
+    setTimeout(()=>{
+        button.style.filter='brightness(100%)';
+        button.style.background='radial-gradient(closest-side, #ffffff, '+back+')';
+    },a);
 }
+
 // Function that executes the sequence
 function sequenceExecuter(speed){
     // set the user sequence iteration to 0 & reset the whole user sequence
     userseqiteration=0;userseq=[];
-    // generate a random number between 1 and the number of buttons on screen
+    // generate a random number from 0 to the max number of buttons on screen
     let randombtn=Math.floor(Math.random()*buttons.length);
     // push it to the sequence
-    //let button=document.getElementById(buttons[randombtn]);
-
-    // TEST
-    let aaaa=document.getElementById('btn01');
-    let bbbb=document.getElementById('btn02');
-    let cccc=document.getElementById('btn03');
-    let dddd=document.getElementById('btn04');
-    sequence=[aaaa,bbbb,cccc,dddd];
-    //
-
-    //sequence.push(button);
+    let button=document.getElementById(buttons[randombtn]);sequence.push(button);
     // decide at what speed the buttons are going to be shown
     let time;
     switch(speed){
@@ -111,13 +112,18 @@ function sequenceLoop(time,i){
     setTimeout(()=>{
         // read button number (i) of the sequence
         let button=sequence[i];
-        // bright it up
-        brightButtonAmt(button);
         // if the button brighting up it's not the first one, remove the 'brighting up' style from the previous one
+        let oldbtn=sequence[i-1];
         if(i!=0){
-            let oldbtn=sequence[i-1];
             oldbtn.removeAttribute('style');
         }
+        // get background color of the button that was pressed if the current button of the sequence was not the same as the previous one
+        if(oldbtn!=button){
+            back=getComputedStyle(button).backgroundColor;
+        }
+        // bright it up
+        a=100;
+        brightButtonAmt(button,back,a);
         i=i+1;
         if(i<sequence.length){
             sequenceLoop(time,i);
