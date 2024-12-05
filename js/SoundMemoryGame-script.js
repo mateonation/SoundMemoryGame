@@ -58,14 +58,22 @@ function brightButtonAmt(button){
     button.style.filter='brightness(100%)';
     button.style.background='radial-gradient(closest-side, #ffffff, '+back+')';
 }
-
 // Function that executes the sequence
 function sequenceExecuter(speed){
     // generate a random number between 1 and the number of buttons on screen
     let randombtn=Math.floor(Math.random()*buttons.length);
     // push it to the sequence
-    let button=document.getElementById(buttons[randombtn]);
-    sequence.push(button);
+    //let button=document.getElementById(buttons[randombtn]);
+
+    // TEST
+    let aaaa=document.getElementById('btn01');
+    let bbbb=document.getElementById('btn02');
+    let cccc=document.getElementById('btn03');
+    let dddd=document.getElementById('btn04');
+    sequence=[aaaa,bbbb,cccc,dddd];
+    //
+
+    //sequence.push(button);
     // decide at what speed the buttons are going to be shown
     let time;
     switch(speed){
@@ -79,14 +87,32 @@ function sequenceExecuter(speed){
             time=800;
             break;
     }
-    // show sequence
-    for(i=0;i<sequence.length;i++){
-        let btn=sequence[i];
-        seqinterval=setInterval(brightButtonAmt(btn),time);
-        setTimeout(()=>{
-            btn.removeAttribute('style');
-        },(time-100));
-    }
-    // now that the function fully finished, player can continue
-    cancontinue=true;
+    // execute sequence loop
+    let i=0;
+    sequenceLoop(time,i);
+}
+
+// Execute the sequence loop
+function sequenceLoop(time,i){
+    setTimeout(()=>{
+        // read button number (i) of the sequence
+        let button=sequence[i];
+        // bright it up
+        brightButtonAmt(button);
+        // if the button brighting up it's not the first one, remove the 'brighting up' style from the previous one
+        if(i!=0){
+            let oldbtn=sequence[i-1];
+            oldbtn.removeAttribute('style');
+        }
+        i=i+1;
+        if(i<sequence.length){
+            sequenceLoop(time,i);
+        }else{
+            setTimeout(()=>{
+                button.removeAttribute('style');
+                // now that the function fully finished, player can continue
+                cancontinue=true;
+            },time);
+        }
+    },time);
 }
