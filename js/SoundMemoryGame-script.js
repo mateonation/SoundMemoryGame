@@ -1,4 +1,4 @@
-let sequence=[];let userseq=[];
+let sequence=[];let userseq=[];let userseqiteration;
 let level=0;let lvl_display=document.getElementById('level-num');
 let speed=1;let sp_display=document.getElementById('speed-num');
 let points=0;let pt_display=document.getElementById('points-num');
@@ -18,8 +18,8 @@ function startGame(){
     // reset game stats to default and display them on each display
     sequence=[];userseq=[];
     level=0;lvl_display.value=level;
-    points=0;sp_display.value=speed;
-    speed=1;pt_display.value=points;
+    points=0;pt_display.value=points;
+    speed=1;sp_display.value=speed;
     // set the state of the game to started
     gamestarted=true;
     // sequence executer: when it finishes, player can continue again
@@ -39,7 +39,19 @@ function buttonPressed(id){
     let pressedbtn=document.getElementById(id);
     // if a game was started, CHECK IF IT'S VALID ON THE SEQUENCE WIP WIP WIP WIP!!!
     if(gamestarted){
-        
+        // if the button coincides, sum up one iteration
+        if(verifyButtonOnSequence(pressedbtn)){
+            userseq.push(pressedbtn);
+            userseqiteration++;
+            // this should loop again the sequence executer if the iteration excedes the sequence length
+            if(userseqiteration>=sequence.length){
+                alert('order repeated correctly');
+            }
+        // If not, set the game started to false and show up an error alert
+        }else{
+            alert('you pressed the incorrect button!!!');
+            gamestarted=false;
+        }
     }
     // initialize animation to bright up the button pressed
     brightButtonAmt(pressedbtn);
@@ -60,6 +72,8 @@ function brightButtonAmt(button){
 }
 // Function that executes the sequence
 function sequenceExecuter(speed){
+    // set the user sequence iteration to 0 & reset the whole user sequence
+    userseqiteration=0;userseq=[];
     // generate a random number between 1 and the number of buttons on screen
     let randombtn=Math.floor(Math.random()*buttons.length);
     // push it to the sequence
@@ -115,4 +129,13 @@ function sequenceLoop(time,i){
             },time);
         }
     },time);
+}
+
+// Check if the 
+function verifyButtonOnSequence(button){
+    if(button===sequence[userseqiteration]){
+        return true;
+    }else{
+        return false;
+    }
 }
