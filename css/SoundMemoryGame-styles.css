@@ -230,6 +230,7 @@ body{
     .main-container{
         background:linear-gradient(#ffffff6e,#ffffff18 10%);
         box-shadow: 0px 0px 10px #27265a93;
+        border-color:#f18766;
     }
     .SECOND{
         div{
