@@ -93,9 +93,26 @@ function buttonPressed(id){
 
 // To bright up a button
 function brightButtonAmt(button,back,a){
+    let glow;
+    // if the actual theme is 'contrast': change glow colour in which button was pressed
+    if(document.getElementById('theme-element').classList.item(0)==='contrast'){
+        switch(button.id){
+            case 'btn01':
+                glow='#ff0000';break;
+            case 'btn02':
+                glow='#00ff00';break;
+            case 'btn03':
+                glow='#ffff00';break;
+            case 'btn04':
+                glow='#0000ff';break;
+        }
+    // if not, glow is white;
+    }else{
+        glow='#ffffff';
+    }
     setTimeout(()=>{
         button.style.filter='brightness(100%)';
-        button.style.background='radial-gradient(closest-side, #ffffff, '+back+')';
+        button.style.background='radial-gradient(closest-side, '+glow+', '+back+')';
     },a);
 }
 
@@ -191,7 +208,7 @@ function speedDisplay(speed){
 // Set the theme of the game
 function themeManager(){
     // array of themes' names
-    const themes=['light','dark','clear-sky','warm-dawn'];
+    const themes=['light','dark','contrast','clear-sky','warm-dawn'];
     // read current theme of the game
     let body=document.getElementById('theme-element');
     let current=body.classList.item(0);
