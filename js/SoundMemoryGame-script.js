@@ -13,6 +13,8 @@ function startGame(){
     }else{
         cancontinue=false;
     }
+    // execute theme manager for themes
+    themeManager();
     // reset game stats to default and display them on each display
     sequence=[];
     level=0;levelDisplay(level);
@@ -184,4 +186,23 @@ function pointsDisplay(points){
 function speedDisplay(speed){
     let sp_display=document.getElementById('speed-num');
     sp_display.value=speed;
+}
+
+// Set the theme of the game
+function themeManager(){
+    // array of themes' names
+    const themes=['default','alt01'];
+    // read current theme of the game
+    let body=document.getElementById('theme-element');
+    let current=body.classList.item(0);
+    // read what theme is selected on the theme-selector
+    let selector=document.getElementById('theme-selector');
+    let index=selector.options[selector.selectedIndex].value;
+    // select theme by using the selector value as an index to the theme name list
+    let selected=themes[index];
+    // change theme of the game if the current theme and the one selected are not the same
+    if(current!=selected){
+        body.classList.remove(current);
+        body.classList.add(selected);
+    }
 }
