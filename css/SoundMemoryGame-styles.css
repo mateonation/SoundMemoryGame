@@ -133,3 +133,40 @@ body{
         }
     }
 }
+.warm-dawn{
+    background:linear-gradient(45deg,#ac2727,#f1ef79);
+    .main-container{
+        background:linear-gradient(#ffffff6e,#ffffff18 10%);
+        box-shadow: 0px 0px 10px #27265a93;
+    }
+    .SECOND{
+        div{
+            box-shadow: 0px 0px 10px #17002c;
+        }
+        #btn01{
+            background-color:#c8ff00;
+        }
+        #btn02{
+            background-color:#00ffff;
+        }
+        #btn03{
+            background-color:#ff7b00;
+        }
+        #btn04{
+            background-color:#ff0080;
+        }
+        input{
+            box-shadow: 0px 0px 10px #331c522f;
+        }
+    }
+    .THIRD{
+        button,select{
+            background:linear-gradient(#ffffff75,transparent 70%,#66666617 90%);
+            border:5px solid #f18766;
+            box-shadow: 0px 0px 10px #27265a5d;
+        }
+        button:hover,select:hover{
+            border-color:#dd722a;
+        }
+    }
+}
