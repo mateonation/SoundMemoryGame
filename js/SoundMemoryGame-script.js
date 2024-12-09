@@ -191,7 +191,7 @@ function speedDisplay(speed){
 // Set the theme of the game
 function themeManager(){
     // array of themes' names
-    const themes=['default','warm-dawn'];
+    const themes=['light','dark','clear-sky','warm-dawn'];
     // read current theme of the game
     let body=document.getElementById('theme-element');
     let current=body.classList.item(0);
