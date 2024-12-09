@@ -1,7 +1,5 @@
 let sequence=[];let userseq=[];let userseqiteration;let back;
-let level=0;let lvl_display=document.getElementById('level-num');
-let speed=1;let sp_display=document.getElementById('speed-num');
-let points=0;let pt_display=document.getElementById('points-num');
+let level=0;let speed=1;let points=0;
 let gamestarted=false; let cancontinue=true;
 let buttons=['btn01','btn02','btn03','btn04'];
 let seqinterval;
@@ -17,9 +15,9 @@ function startGame(){
     }
     // reset game stats to default and display them on each display
     sequence=[];
-    level=0;lvl_display.value=level;
-    points=0;pt_display.value=points;
-    speed=1;sp_display.value=speed;
+    level=0;levelDisplay(level);
+    points=0;pointsDisplay(points);
+    speed=1;speedDisplay(speed);
     // set the state of the game to started
     gamestarted=true;
     // sequence executer: when it finishes, player can continue again
@@ -60,16 +58,34 @@ function buttonPressed(id){
     // initialize animation to bright up the button pressed
     let a=0;
     brightButtonAmt(pressedbtn,back,a);
-    // remove styles that were added in a timeout
     setTimeout(()=>{
+        // remove styles that were added in a timeout
         pressedbtn.removeAttribute('style');
-        // execute the sequence again if the sequence was perfect
-        if(perfseq){
-            sequenceExecuter(speed);
-            cancontinue=false;
-        }else{
-            cancontinue=true;
+        // execute the whole process of increasing points, speed and levels if the game were started
+        if(gamestarted){
+            // user executed the whole sequence perfectly
+            if(perfseq){
+                // increase level
+                level++;
+                levelDisplay(level);
+                // increase points by 9
+                points=points+9;
+                pointsDisplay(points);
+                // every 3 levels the speed is incremented if the speed is not superior than 5
+                if(level%3===0 && speed<5){
+                    speed++;
+                    speedDisplay(speed);
+                }
+                // execute the sequence again if the sequence was perfect
+                sequenceExecuter(speed);
+                cancontinue=false;
+            }else{
+                // increase points by 3
+                points=points+3;
+                pointsDisplay(points);
+            }
         }
+        cancontinue=true;
     },100);
 }
 
@@ -96,10 +112,16 @@ function sequenceExecuter(speed){
             time=1000;
             break;
         case 2:
-            time=900;
+            time=800;
             break;
         case 3:
-            time=800;
+            time=700;
+            break;
+        case 4:
+            time=550;
+            break;
+        case 5:
+            time=450;
             break;
     }
     // execute sequence loop
@@ -137,11 +159,29 @@ function sequenceLoop(time,i){
     },time);
 }
 
-// Check if the 
+// Check if the button coincides with the button saved on the sequence in the iteration that's specified
 function verifyButtonOnSequence(button){
     if(button===sequence[userseqiteration]){
         return true;
     }else{
         return false;
     }
+}
+
+// Set the level number on it's text input
+function levelDisplay(level){
+    let lvl_display=document.getElementById('level-num');
+    lvl_display.value=level;
+}
+
+// Set points on it's text input
+function pointsDisplay(points){
+    let pt_display=document.getElementById('points-num');
+    pt_display.value=points;
+}
+
+// Set speed value on it's text input
+function speedDisplay(speed){
+    let sp_display=document.getElementById('speed-num');
+    sp_display.value=speed;
 }
