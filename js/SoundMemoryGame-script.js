@@ -2,10 +2,13 @@ let sequence=[];let userseq=[];let userseqiteration;let back;
 let level=0;let speed=1;let points=0;
 let gamestarted=false; let cancontinue=true;
 let buttons=['btn01','btn02','btn03','btn04'];
-let seqinterval;
+let seqinterval;let wospeedprogression=false;
+
 
 // When user presses the 'START!' button:
 function startGame(){
+    // set the without speed progression value to false
+    wospeedprogression=false;
     // function does not initialize if player can't continue
     if(!cancontinue){
         return;
@@ -15,11 +18,24 @@ function startGame(){
     }
     // execute theme manager for themes
     themeManager();
-    // reset game stats to default and display them on each display
     sequence=[];
+    // set the speed of the game in order to the option selected on the dropdown menu
+    speed=1;
+    let speed_selector=document.getElementById('speed-selector');
+    let speed_val=speed_selector.options[speed_selector.selectedIndex].value;
+    let sp_index=parseInt(speed_val);
+    // if the option selected on the dropdown menu is not 0, then it's either without speed progression or with a custom speed
+    if(sp_index!=0){
+        wospeedprogression=true;
+        // if the option selected is custom speed, then do the next function
+        if(sp_index!=1){
+            speed=askSpeed();
+        }
+    }
+    // reset game stats to default and display them on each display
+    speedDisplay(speed);
     level=0;levelDisplay(level);
     points=0;pointsDisplay(points);
-    speed=1;speedDisplay(speed);
     // set the state of the game to started
     gamestarted=true;
     // sequence executer: when it finishes, player can continue again
@@ -73,8 +89,8 @@ function buttonPressed(id){
                 // increase points by 9
                 points=points+9;
                 pointsDisplay(points);
-                // every 3 levels the speed is incremented if the speed is not superior than 5
-                if(level%3===0 && speed<5){
+                // every 3 levels the speed is incremented if the speed is not superior than 5 and if the game has speed progression
+                if(level%3===0 && speed<5 && !wospeedprogression){
                     speed++;
                     speedDisplay(speed);
                 }
@@ -93,7 +109,7 @@ function buttonPressed(id){
 
 // To bright up a button
 function brightButtonAmt(button,back,a){
-    let glow;
+    let glow='#ffffff';
     // if the actual theme is 'contrast': change glow colour in which button was pressed
     if(document.getElementById('theme-element').classList.item(0)==='contrast'){
         switch(button.id){
@@ -106,10 +122,8 @@ function brightButtonAmt(button,back,a){
             case 'btn04':
                 glow='#0000ff';break;
         }
-    // if not, glow is white;
-    }else{
-        glow='#ffffff';
     }
+    // if not, glow remains white;
     setTimeout(()=>{
         button.style.filter='brightness(100%)';
         button.style.background='radial-gradient(closest-side, '+glow+', '+back+')';
@@ -185,6 +199,35 @@ function verifyButtonOnSequence(button){
     }else{
         return false;
     }
+}
+
+// Function to set manually the speed of the game
+function askSpeed(){
+    let selecting=true;let number;let popup;
+    // do this loop until a valid number is selected or until the user changes it's mind and does not set any speed
+    do{
+        // prompt asking
+        popup=prompt('Insert the speed number you would like to play the game at\n\n(1 to 5 included)',"0");
+        // if user pressed CANCEL button
+        if(popup===null){
+            // if player selects ACCEPT in the next confirm, then set the normal speed progression configuration
+            if(confirm("Do you still want to choose the speed of the game or do you want it to have automatic progression?\n")){
+                document.getElementById('speed-selector').options[0].selected='selected';
+                number=1;
+                wospeedprogression=false;
+                selecting=false;
+            }
+        // if user pressed ACCEPT button
+        }else{
+            // parse the prompt result
+            number=parseInt(popup);
+            // if it's greater than 0 and less or equal to 5 then stop the loop
+            if(number>0 && number<=5){
+                selecting=false;
+            }
+        }
+    }while(selecting);
+    return number;
 }
 
 // Set the level number on it's text input
