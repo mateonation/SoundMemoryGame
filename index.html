@@ -9,6 +9,20 @@
         <title>SoundMemoryGame</title>
     </head>
     <body id="theme-element" class="light">
+        <section class="popup-overlay">
+            <section class="popup-window">
+                <div><h1>Game Over!</h1>
+                <p>Your stats:</p></div>
+                <table>
+                    <tr><td>Theme</td><td id="theme-tile" colspan="3">light</td></tr>
+                    <tr><td>Speed</td><td id="speed-tile" colspan="3">1</td></tr>
+                    <tr><td>Speed progression</td><td id="progression-tile">true</td><td>Custom speed</td><td id="custom-tile">false</td></tr>
+                    <tr><td>Cleared levels</td><td id="level-tile" colspan="3">2</td></tr>
+                </table>
+                <span id="totalpoints">Total points: XXXX</span>
+                <button id="closing" onclick="closePopup();">CLOSE</button>
+            </section>
+        </section>
         <section class="main-container">
             <section class="FIRST"><h1>SoundMemoryGame</h1><p>by mateonation</p></section>
             <section class="SECOND">

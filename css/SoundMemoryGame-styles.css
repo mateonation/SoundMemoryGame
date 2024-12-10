@@ -7,6 +7,86 @@ body{
     display:flex;
     height:100vh;
 }
+.popup-overlay{
+    visibility:hidden;
+    position:absolute;
+    background:#16003048;
+    width:100%;
+    height:100%;
+    .popup-window{
+        position:sticky;
+        background:#ffffff;
+        border:4px solid black;
+        width:800px;
+        padding:2em;
+        border-radius:0.5em;
+        font-size:x-large;
+        text-align:center;
+        display:grid;
+        margin-left:auto;
+        margin-right:auto;
+        gap:10px;
+        top:20%;
+        h1,p{
+            margin:0;
+        }
+        table{
+            text-align:left;
+            font-size:large;
+            border-collapse:collapse;
+            tr{
+                td{
+                    padding:0.5em;
+                    background:#e4ecf1;
+                    width:auto;
+                    height:60px;
+                    font-weight: 800;
+                }
+                td:nth-child(even){
+                    font-weight: 400;
+                }
+            }
+            tr:nth-child(even){
+                td{
+                    background:#e8f0f8;
+                }
+            }
+            tr:first-child{
+                td:first-child{
+                    border-top-left-radius:0.5em;
+                }
+                td:last-child{
+                    border-top-right-radius:0.5em;
+                }
+            }
+            tr:last-child{
+                td:first-child{
+                    border-bottom-left-radius:0.5em;
+                }
+                td:last-child{
+                    border-bottom-right-radius:0.5em;
+                }
+            }
+        }
+        #totalpoints{
+            text-align:right;
+            font-size: larger;
+            font-weight:700;
+            font-style:italic;
+        }
+        #closing{
+            width:min-content;
+            margin-left:auto;
+            margin-right:auto;
+            border:4px solid black;
+            padding:1em;
+            padding-left:5em;
+            padding-right:5em;
+            border-radius:1em;
+            font-size:medium;
+        }
+    }
+}
 .main-container{
     margin-top:auto;
     margin-bottom:auto;
