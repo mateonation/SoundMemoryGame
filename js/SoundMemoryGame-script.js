@@ -251,7 +251,7 @@ function speedDisplay(speed){
 // Set the theme of the game
 function themeManager(){
     // array of themes' names
-    const themes=['light','dark','contrast','clear-sky','warm-dawn','sweet-melon','red-apple','canary-banana','spooky-pumpkin','juicy-peach','frozen-lake'];
+    const themes=['light','dark','contrast','clear-sky','warm-sunset','sweet-melon','red-apple','canary-banana','spooky-pumpkin','juicy-peach','frozen-lake'];
     // read current theme of the game
     let body=document.getElementById('theme-element');
     let current=body.classList.item(0);
