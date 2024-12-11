@@ -9,13 +9,17 @@ let theme='light';
 function startGame(){
     // set the without speed progression and custom speed values to false
     wospeedprogression=false;cus_speed=false;
-    // function does not initialize if player can't continue
+    // function does not initialize if user can't continue
     if(!cancontinue){
         return;
-    // if it can continue, then initialize function and change the state to false until the function finishes
-    }else{
-        cancontinue=false;
+    // if not, then check if a game has already been started and ask the user if they want to end it and start a whole new game
+    }else if(gamestarted){
+        if(!confirm('Are you sure you want to end the current game and start a new one?')){
+            return;
+        }
     }
+    // if it can continue, then initialize function and change the state to false until the function finishes
+    cancontinue=false;
     // execute theme manager for themes
     themeManager();
     sequence=[];
@@ -38,13 +42,13 @@ function startGame(){
     points=0;pointsDisplay(points);
     // set the state of the game to started
     gamestarted=true;
-    // sequence executer: when it finishes, player can continue again
+    // sequence executer: when it finishes, user can continue again
     sequenceExecuter(speed);
 }
 
 // When user presses a colored button onscreen
 function buttonPressed(id){
-    // function does not initialize if player can't continue
+    // function does not initialize if user can't continue
     if(!cancontinue){
         return;
     // if it's not, then change it to true until the function finishes
@@ -186,7 +190,7 @@ function sequenceLoop(time,i){
         }else{
             setTimeout(()=>{
                 button.removeAttribute('style');
-                // now that the function fully finished, player can continue
+                // now that the function fully finished, user can continue
                 cancontinue=true;
             },time);
         }
@@ -211,7 +215,7 @@ function askSpeed(){
         popup=prompt('Insert the speed number you would like to play the game at\n\n(1 to 5 included)',"0");
         // if user pressed CANCEL button
         if(popup===null){
-            // if player selects ACCEPT in the next confirm, then set the normal speed progression configuration
+            // if user selects ACCEPT in the next confirm, then set the normal speed progression configuration
             if(confirm("Do you still want to choose the speed of the game or do you want it to have automatic progression?\n")){
                 document.getElementById('speed-selector').options[0].selected='selected';
                 number=1;
@@ -250,7 +254,7 @@ function speedDisplay(speed){
     sp_display.value=speed;
 }
 
-// Animation that occurs when the player hits the wrong button in a sequence
+// Animation that occurs when the user hits the wrong button in a sequence
 function sequenceLostGame(i){
     // paint all 4 buttons black
     setTimeout(()=>{
@@ -298,9 +302,9 @@ function showPopup(){
     let progression_tile=document.getElementById('progression-tile');progression_tile.textContent=!wospeedprogression;
     // write if a custom speed has been set
     let custom_tile=document.getElementById('custom-tile');custom_tile.textContent=cus_speed;
-    // write the number of the levels that the player has cleared
+    // write the number of the levels that the user has cleared
     let level_tile=document.getElementById('level-tile');level_tile.textContent=level;
-    // write the number of the points that the player has achieved
+    // write the number of the points that the user has achieved
     let pointstext=document.getElementById('totalpoints');pointstext.textContent='Total points: '+points;
     // hide buttons (they keep appearing on top of the pop up for some reason)
     for(i=0;i<buttons.length;i++){
@@ -318,7 +322,7 @@ function showPopup(){
             let btn=document.getElementById(buttons[i]);
             btn.removeAttribute('style');
         }
-        // let the player continue again
+        // let the user continue again
         cancontinue=true;
     });
 }
