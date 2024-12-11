@@ -7,14 +7,14 @@ body{
     display:flex;
     height:100vh;
 }
-.popup-overlay{
-    visibility:hidden;
-    position:absolute;
+#popup-overlay{
+    display:none;
+    position:fixed;
     background:#16003048;
     width:100%;
     height:100%;
     .popup-window{
-        position:sticky;
+        position:relative;
         background:#ffffff;
         border:4px solid black;
         width:800px;
@@ -115,6 +115,7 @@ body{
             gap:2em;
             padding:2em;
             div{
+                position:relative;
                 width:150px;
                 height:150px;
                 border-radius:1em;

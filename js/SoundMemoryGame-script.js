@@ -2,13 +2,13 @@ let sequence=[];let userseq=[];let userseqiteration;let back;
 let level=0;let speed=1;let points=0;
 let gamestarted=false; let cancontinue=true;
 let buttons=['btn01','btn02','btn03','btn04'];
-let seqinterval;let wospeedprogression=false;
-
+let seqinterval;let wospeedprogression=false;let cus_speed=false;
+let theme='light';
 
 // When user presses the 'START!' button:
 function startGame(){
-    // set the without speed progression value to false
-    wospeedprogression=false;
+    // set the without speed progression and custom speed values to false
+    wospeedprogression=false;cus_speed=false;
     // function does not initialize if player can't continue
     if(!cancontinue){
         return;
@@ -55,6 +55,15 @@ function buttonPressed(id){
     let pressedbtn=document.getElementById(id);
     // set the perfect sequence to false
     let perfseq=false;
+    // get background color of the button that was pressed
+    back=getComputedStyle(pressedbtn).backgroundColor;
+    // initialize animation to bright up the button pressed
+    let a=0;
+    brightButtonAmt(pressedbtn,back,a);
+    setTimeout(()=>{
+        // remove styles that were added in a timeout
+        pressedbtn.removeAttribute('style');
+    },100);
     // if a game was started, CHECK IF IT'S VALID ON THE SEQUENCE WIP WIP WIP WIP!!!
     if(gamestarted){
         // if the button coincides, sum up one iteration
@@ -67,42 +76,34 @@ function buttonPressed(id){
             }
         // If not, set the game started to false and show up an error alert
         }else{
-            alert('you pressed the incorrect button!!!');
+            let i=0;
+            sequenceLostGame(i);
             gamestarted=false;
+            return;
         }
     }
-    // get background color of the button that was pressed
-    back=getComputedStyle(pressedbtn).backgroundColor;
-    // initialize animation to bright up the button pressed
-    let a=0;
-    brightButtonAmt(pressedbtn,back,a);
+    if(perfseq && gamestarted){
+        // increase level
+        level++;
+        levelDisplay(level);
+        // increase points by 9
+        points=points+9;
+        pointsDisplay(points);
+        // every 3 levels the speed is incremented if the speed is not superior than 5 and if the game has speed progression
+        if(level%3===0 && speed<5 && !wospeedprogression){
+            speed++;
+            speedDisplay(speed);
+        }
+        // execute the sequence again if the sequence was perfect
+        sequenceExecuter(speed);
+        cancontinue=false;
+    }else if(gamestarted){
+        // increase points by 3
+        points=points+3;
+        pointsDisplay(points);
+    }
     setTimeout(()=>{
         // remove styles that were added in a timeout
-        pressedbtn.removeAttribute('style');
-        // execute the whole process of increasing points, speed and levels if the game were started
-        if(gamestarted){
-            // user executed the whole sequence perfectly
-            if(perfseq){
-                // increase level
-                level++;
-                levelDisplay(level);
-                // increase points by 9
-                points=points+9;
-                pointsDisplay(points);
-                // every 3 levels the speed is incremented if the speed is not superior than 5 and if the game has speed progression
-                if(level%3===0 && speed<5 && !wospeedprogression){
-                    speed++;
-                    speedDisplay(speed);
-                }
-                // execute the sequence again if the sequence was perfect
-                sequenceExecuter(speed);
-                cancontinue=false;
-            }else{
-                // increase points by 3
-                points=points+3;
-                pointsDisplay(points);
-            }
-        }
         cancontinue=true;
     },100);
 }
@@ -221,8 +222,9 @@ function askSpeed(){
         }else{
             // parse the prompt result
             number=parseInt(popup);
-            // if it's greater than 0 and less or equal to 5 then stop the loop
+            // if it's greater than 0 and less or equal to 5 then stop the loop and set the variable custom speed to true
             if(number>0 && number<=5){
+                cus_speed=true;
                 selecting=false;
             }
         }
@@ -248,6 +250,79 @@ function speedDisplay(speed){
     sp_display.value=speed;
 }
 
+// Animation that occurs when the player hits the wrong button in a sequence
+function sequenceLostGame(i){
+    // paint all 4 buttons black
+    setTimeout(()=>{
+        for(y=0;y<buttons.length;y++){
+            let div=document.getElementById(buttons[y]);
+            div.style.backgroundColor='#000000';
+        }
+    },100);
+    let time=200;
+    // light up buttons in certain time
+    setTimeout(()=>{
+        for(x=0;x<buttons.length;x++){
+            let div=document.getElementById(buttons[x]);
+            back='#000000';
+            let a=100;
+            brightButtonAmt(div,back,a);
+        }
+    },time);
+    // turn off the buttons in that time multiplied by two
+    setTimeout(()=>{
+        for(x=0;x<buttons.length;x++){
+            let div=document.getElementById(buttons[x]);
+            div.style.background='#000000';
+        }
+        i++;
+        // loop it again
+        if(i<4){
+            sequenceLostGame(i);
+        // if the buttons have already been lighted up 4 times, break the loop and show pop up with the total stats of the game
+        }else{
+            setTimeout(()=>{
+                showPopup();
+            },time)
+        }
+    },time*2);
+}
+
+// Show the popup window with the stats of the game
+function showPopup(){
+    // write theme name
+    let theme_tile=document.getElementById('theme-tile');theme_tile.textContent=theme;
+    // write the actual speed value
+    let speed_tile=document.getElementById('speed-tile');speed_tile.textContent=speed;
+    // write if there's speed progression
+    let progression_tile=document.getElementById('progression-tile');progression_tile.textContent=!wospeedprogression;
+    // write if a custom speed has been set
+    let custom_tile=document.getElementById('custom-tile');custom_tile.textContent=cus_speed;
+    // write the number of the levels that the player has cleared
+    let level_tile=document.getElementById('level-tile');level_tile.textContent=level;
+    // write the number of the points that the player has achieved
+    let pointstext=document.getElementById('totalpoints');pointstext.textContent='Total points: '+points;
+    // hide buttons (they keep appearing on top of the pop up for some reason)
+    for(i=0;i<buttons.length;i++){
+        let btn=document.getElementById(buttons[i]);
+        btn.style.display='none';
+    }
+    // finally, show pop up window
+    let popup_zone=document.getElementById('popup-overlay');popup_zone.style.display='block';
+    // add an event listener to the close button
+    document.getElementById('closing').addEventListener('click', ()=>{
+        // hide popup again
+        popup_zone.removeAttribute('style');
+        // remove all style atributes of the buttons (make them visible again)
+        for(i=0;i<buttons.length;i++){
+            let btn=document.getElementById(buttons[i]);
+            btn.removeAttribute('style');
+        }
+        // let the player continue again
+        cancontinue=true;
+    });
+}
+
 // Set the theme of the game
 function themeManager(){
     // array of themes' names
@@ -264,5 +339,6 @@ function themeManager(){
     if(current!=selected){
         body.classList.remove(current);
         body.classList.add(selected);
+        theme=selected;
     }
 }
