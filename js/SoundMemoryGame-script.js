@@ -116,8 +116,9 @@ function buttonPressed(id){
 function brightButtonAmt(button,back,a){
     let glow='#ffffff';
     // execute button's sound
-    let sound=new Audio('../fx/'+button.id+'.ogg');
-    sound.play();
+    let sound=new Audio();
+    sound.autoplay=true;
+    sound.src='../fx/'+button.id+'.ogg';
     // if the actual theme is 'contrast': change glow colour in which button was pressed
     if(document.getElementById('theme-element').classList.item(0)==='contrast'){
         switch(button.id){
